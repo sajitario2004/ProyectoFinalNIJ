@@ -26,7 +26,7 @@ public class VentanaPrincipal extends All_In implements ActionListener {
     public VentanaPrincipal() {
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setTitle("Ventana Principal");
-        ventanaPrincipal.setResizable(false);
+        ventanaPrincipal.setResizable(true);
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setBounds(0, 0, tamanoX, tamanoY);
 
@@ -53,7 +53,7 @@ public class VentanaPrincipal extends All_In implements ActionListener {
 
         // Configuración del botón de salida
         bSalir.addActionListener(this);
-        bSalir.setText(""); // Asegúrate de que el botón tenga texto
+        bSalir.setText("X"); // Asegúrate de que el botón tenga texto
         int cSalidaX = all.tPantallaX - 100;
         int cSalidaY = 0;
         int tSalidaX = all.tPantallaX * 6 / 100;
@@ -61,6 +61,8 @@ public class VentanaPrincipal extends All_In implements ActionListener {
         bSalir.setBounds(cSalidaX, cSalidaY, tSalidaX, tSalidaY);
         bSalir.setBackground(Color.RED);
         bSalir.setForeground(Color.WHITE);
+        bSalir.setBorderPainted(false);
+        bSalir.setFocusPainted(false);
 
         // Añadir MouseListener para el botón
         bSalir.addMouseListener(new MouseAdapter() {
