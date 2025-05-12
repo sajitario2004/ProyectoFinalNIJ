@@ -1,32 +1,41 @@
-package org.aaPrincipal;
+package org.pruebas;
+
+import org.aaPrincipal.All_In;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class VentanaPrincipal extends All_In implements ActionListener {
+public class p4betaconscrol extends All_In implements ActionListener {
     JFrame ventanaPrincipal = new JFrame();
     All_In all = new All_In();
 
     int tamanoX = all.tPantallaX;
     int tamanoY = all.tPantallaY;
 
+    // Lista para almacenar los nombres
     List<JButton> buttons = all.bVPrincipal;
 
-    //variable para imagen
+    // Variable para imagen
     Image backgroundImage = null;
 
-    //buton
-    JButton bSalir = new JButton(); // Asegúrate de inicializar el botón
-    
+    // Botón de salida
+    JButton bSalir = new JButton();
 
-    public VentanaPrincipal() {
+    // Componentes para agregar nombres
+    JTextField inputField = new JTextField();
+    JButton addButton = new JButton("Agregar");
+    JPanel namesPanel = new JPanel();
+    JScrollPane scrollPane;
+
+    public p4betaconscrol() {
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setTitle("Ventana Principal");
-        ventanaPrincipal.setResizable(false);
+        ventanaPrincipal.setResizable(true);
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setBounds(0, 0, tamanoX, tamanoY);
 
@@ -77,11 +86,49 @@ public class VentanaPrincipal extends All_In implements ActionListener {
             }
         });
 
-        // Añadir el botón al panel de contenido
+        // Configuración del panel de nombres
+        namesPanel.setLayout(new BoxLayout(namesPanel, BoxLayout.Y_AXIS));
+        scrollPane = new JScrollPane(namesPanel);
+        scrollPane.setBounds(10, 50, tamanoX - 20, tamanoY - 100); // Ajusta el tamaño y la posición
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // Configuración del campo de texto y botón para agregar nombres
+        inputField.setBounds(10, tamanoY - 40, tamanoX - 120, 30);
+        addButton.setBounds(tamanoX - 110, tamanoY - 40, 100, 30);
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addName();
+            }
+        });
+
+        // Añadir componentes al panel de contenido
         contentPane.add(bSalir);
+        contentPane.add(scrollPane);
+        contentPane.add(inputField);
+        contentPane.add(addButton);
 
         // Hacer visible la ventana
         ventanaPrincipal.setVisible(true);
+    }
+
+    private void addName() {
+        String name = inputField.getText().trim();
+        if (!name.isEmpty()) {
+            JLabel nameLabel = new JLabel(name);
+            nameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+            nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            namesPanel.add(nameLabel);
+            namesPanel.revalidate();
+            // Hacer scroll hasta el final
+            SwingUtilities.invokeLater(() -> {
+                JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                vertical.setValue(vertical.getMaximum());
+            });
+            inputField.setText("");
+            inputField.requestFocus();
+        }
     }
 
     @Override
@@ -92,6 +139,6 @@ public class VentanaPrincipal extends All_In implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new VentanaPrincipal();
+        new p4betaconscrol();
     }
 }

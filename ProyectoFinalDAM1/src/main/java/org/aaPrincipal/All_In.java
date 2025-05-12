@@ -9,14 +9,14 @@ import javax.swing.*;
 public class All_In {
 
     //tamaño de la pantalla
-    final int tPantallaY;
-    final int tPantallaX;
+    public final int tPantallaY;
+    public final int tPantallaX;
 
     JButton bSalir;
 
 
     //Lista de botones principales
-    List<JButton> bVPrincipal = new ArrayList<>();
+    public List<JButton> bVPrincipal = new ArrayList<>();
     List<JButton> bOpciones = new ArrayList<>();
     List<JButton> bSelectorJuegos = new ArrayList<>();
     List<JButton> bPartidasGuardadas = new ArrayList<>();
