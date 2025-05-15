@@ -1,13 +1,23 @@
 package org.aaPrincipal;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
+import org.minijuego.minijuego;
+import org.pruebas.p4betaconscrol;
+
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
-public class VentanaPrincipal extends All_In implements ActionListener {
+import static org.minijuego.minijuego.iniciar;
+
+public class VentanaPrincipal extends All_In implements ActionListener, NativeKeyListener {
     JFrame ventanaPrincipal = new JFrame();
     All_In all = new All_In();
 
@@ -20,8 +30,8 @@ public class VentanaPrincipal extends All_In implements ActionListener {
     Image backgroundImage = null;
 
     //buton
-    JButton bSalir = new JButton(); // Asegúrate de inicializar el botón
-    
+    JButton bSalir = all.bSalir; // Asegúrate de inicializar el botón
+    JButton bJuego = all.bJuego;
 
     public VentanaPrincipal() {
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,36 +61,11 @@ public class VentanaPrincipal extends All_In implements ActionListener {
         contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
         ventanaPrincipal.setContentPane(contentPane);
 
-        // Configuración del botón de salida
+        // Añadir botones
         bSalir.addActionListener(this);
-        bSalir.setText("X"); // Asegúrate de que el botón tenga texto
-        int cSalidaX = all.tPantallaX - 100;
-        int cSalidaY = 0;
-        int tSalidaX = all.tPantallaX * 6 / 100;
-        int tSalidaY = all.tPantallaY * 6 / 100;
-        bSalir.setBounds(cSalidaX, cSalidaY, tSalidaX, tSalidaY);
-        bSalir.setBackground(Color.RED);
-        bSalir.setForeground(Color.WHITE);
-        bSalir.setBorderPainted(false);
-        bSalir.setFocusPainted(false);
-
-        // Añadir MouseListener para el botón
-        bSalir.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                bSalir.setBackground(new Color(138, 0, 0));
-                bSalir.setForeground(Color.BLACK);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                bSalir.setBackground(Color.RED);
-                bSalir.setForeground(Color.WHITE);
-            }
-        });
-
-        // Añadir el botón al panel de contenido
         contentPane.add(bSalir);
+        bJuego.addActionListener(this);
+        contentPane.add(bJuego);
 
         // Hacer visible la ventana
         ventanaPrincipal.setVisible(true);
@@ -89,11 +74,63 @@ public class VentanaPrincipal extends All_In implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bSalir) {
+            BufferedWriter bw = null;
+            try {
+                bw = new BufferedWriter(new FileWriter("inazuma.txt",true));
+                bw.flush();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } finally {
+                try {
+                    bw.close();
+                }catch (Exception exception){
+                    System.out.println("Error al cerrar el archivo");
+                }
+            }
             System.exit(0);
+
+        } else if (e.getSource() == bJuego) {
+            new p4betaconscrol();
+            ventanaPrincipal.setVisible(false);
         }
     }
 
     public static void main(String[] args) {
-        new VentanaPrincipal();
+
+        try {
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(new VentanaPrincipal());
+        } catch (NativeHookException e) {
+            System.err.println("ha ocurrido un error con la aplicacion. Tipo de error:" + e.getMessage());
+        }
+
+        //new VentanaPrincipal();
+
+
+    }
+
+    String mEasterEgg = "";
+    @Override
+    public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
+
+        mEasterEgg += NativeKeyEvent.getKeyText(nativeKeyEvent.getKeyCode());
+
+
+        if (mEasterEgg.equalsIgnoreCase("INAZUMA")) {
+            System.out.println(mEasterEgg);
+            iniciar();
+            ventanaPrincipal.setVisible(false);
+        }
+       
+    }
+
+    @Override
+    public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
+
+    }
+
+    @Override
+    public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+
     }
 }

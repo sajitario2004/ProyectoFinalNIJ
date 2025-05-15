@@ -249,7 +249,7 @@ public class minijuego extends JFrame implements ActionListener, NativeKeyListen
 
     }
 
-    public static void main(String[] args) {
+    public static void iniciar (){
         try {
             GlobalScreen.registerNativeHook();
             minijuego game = new minijuego();
