@@ -15,13 +15,29 @@ public class JugadorDAO implements IntDAO<Jugador> {
         this.connection = ConexionMySQL.getConexion();
     }
 
+
     @Override
-    public void insertar(Jugador o) {
-        // No queremos insertar nada en esta tabla
+    public void insertar(Jugador o) throws SQLException {
+
     }
 
     @Override
-    public Jugador obtenerPorId(int id) throws SQLException {
+    public void crear(String fichero) throws SQLException {
+
+    }
+
+    @Override
+    public void actualizar(Jugador o) throws SQLException {
+
+    }
+
+    @Override
+    public void borrar(Jugador o) throws SQLException {
+
+    }
+
+    @Override
+    public Jugador obtenerPorId(int id, String fichero) throws SQLException {
         String sql = "SELECT * FROM jugador WHERE id = ?";
         Jugador j = null;
         try(PreparedStatement ps  = connection.prepareStatement(sql)){
@@ -36,6 +52,8 @@ public class JugadorDAO implements IntDAO<Jugador> {
         }
         return j;
     }
+
+
 
     @Override
     public List<Jugador> obtenerTodos() throws SQLException {
