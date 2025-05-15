@@ -68,10 +68,13 @@ public class All_In {
 
         //Configuracion botonJugar
 
-        JButton bJuego = new JButton();
-
-        bJuego.setBounds(0, cSalidaY, tSalidaX, tSalidaY);
-        bJuego.setBackground(Color.RED);
+        JButton bJuego = new JButton("Iniciar");
+        int xbJuego =(int) (tPantallaX/100*45) ;
+        int ybJuego = (int) (tPantallaY/100*45) ;
+        int wbJuego =(int) (tPantallaX/10) ;
+        int hbJuego = (int) (tPantallaY/20) ;
+        bJuego.setBounds(xbJuego, ybJuego, wbJuego, hbJuego);
+        bJuego.setBackground(Color.orange);
         bJuego.setForeground(Color.WHITE);
         bJuego.setBorderPainted(false);
         bJuego.setFocusPainted(false);
@@ -84,10 +87,11 @@ public class All_In {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                bJuego.setBackground(Color.RED);
+                bJuego.setBackground(Color.orange);
                 bJuego.setForeground(Color.WHITE);
             }
         });
+        this.bJuego = bJuego;
 
         //Botones prinicpals
 
