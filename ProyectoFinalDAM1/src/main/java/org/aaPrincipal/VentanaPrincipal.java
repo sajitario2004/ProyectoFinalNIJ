@@ -24,14 +24,18 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
     int tamanoX = all.tPantallaX;
     int tamanoY = all.tPantallaY;
 
-    List<JButton> buttons = all.bVPrincipal;
+
 
     //variable para imagen
     Image backgroundImage = null;
 
     //buton
-    JButton bSalir = all.bSalir; // Asegúrate de inicializar el botón
+    JButton bSalir = all.bSalir;
+    JTextField tUsuario = all.tUsuario;
     JButton bJuego = all.bJuego;
+    JButton bMostrarJugadores = all.bMostrarJugadores;
+    JButton bHistorial = all.bHistorial;
+
 
     public VentanaPrincipal() {
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +70,10 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
         contentPane.add(bSalir);
         bJuego.addActionListener(this);
         contentPane.add(bJuego);
+        bMostrarJugadores.addActionListener(this);
+        contentPane.add(bMostrarJugadores);
+        bHistorial.addActionListener(this);
+        contentPane.add(bHistorial);
 
         // Hacer visible la ventana
         ventanaPrincipal.setVisible(true);
@@ -74,19 +82,6 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bSalir) {
-            BufferedWriter bw = null;
-            try {
-                bw = new BufferedWriter(new FileWriter("inazuma.txt",true));
-                bw.flush();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } finally {
-                try {
-                    bw.close();
-                }catch (Exception exception){
-                    System.out.println("Error al cerrar el archivo");
-                }
-            }
             System.exit(0);
 
         } else if (e.getSource() == bJuego) {
@@ -103,10 +98,6 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
         } catch (NativeHookException e) {
             System.err.println("ha ocurrido un error con la aplicacion. Tipo de error:" + e.getMessage());
         }
-
-        //new VentanaPrincipal();
-
-
     }
 
     String mEasterEgg = "";

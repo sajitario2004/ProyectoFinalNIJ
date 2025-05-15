@@ -24,7 +24,7 @@ public class minijuego extends JFrame implements ActionListener, NativeKeyListen
     private Point apple;  // Posición de la manzana
     private int direction = KeyEvent.VK_RIGHT; // Dirección inicial
 
-    private static final int UNIT_SIZE = 20; //Tamaño de cada bloque (cuadrados)
+    private static final int UNIT_SIZE = 20; //Tamaño de cada bloque (cuadrados) funciona como una regilla
     private static final int DELAY = 100; //tiempo en ms entre movimientos
     private Timer timer;
     private boolean gameOver = false;
