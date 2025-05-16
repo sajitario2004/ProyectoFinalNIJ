@@ -43,7 +43,7 @@ public class VentanaJugadores extends JFrame implements ActionListener {
 
     List<Jugador> jugadores;
 
-    public VentanaJugadores(){
+    public VentanaJugadores() {
         ventanaJugadores.setTitle("Ventana Jugadores");
         ventanaJugadores.setResizable(true);
         ventanaJugadores.setLocationRelativeTo(null);
@@ -69,7 +69,7 @@ public class VentanaJugadores extends JFrame implements ActionListener {
         };
         contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
         // Configuración del panel de nombres
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+        //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         scrollPane = new JScrollPane(panelPrincipal);
         scrollPane.setBounds(tamanoX/100*30, 50, tamanoX/100*40, tamanoY - 100); // Ajusta el tamaño y la posición
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -106,16 +106,19 @@ public class VentanaJugadores extends JFrame implements ActionListener {
 
         nameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        nameLabel.setForeground(Color.red);
         panelPrincipal.add(nameLabel);
         panelPrincipal.revalidate();
-        // Hacer scroll hasta el final, esto lo hago con lamda por que si no no hay
-        // huevos ha hacer que el scrollpanel se valla autoincrementando con los nombres introducidos
+        //Hacer scroll hasta el final, esto lo hago con lamda por que si no no hay
+        //huevos ha hacer que el scrollpanel se valla autoincrementando con los nombres introducidos
         SwingUtilities.invokeLater(() -> {
             JScrollBar vertical = scrollPane.getVerticalScrollBar();
             vertical.setValue(vertical.getMaximum());
         });
+        panelPrincipal.setLayout(null);
         String lineas = "-----------------------------------";
         JLabel lineasLabel = new JLabel(lineas);
+        lineasLabel.setForeground(Color.blue);
         nameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         panelPrincipal.add(lineasLabel);
@@ -124,6 +127,7 @@ public class VentanaJugadores extends JFrame implements ActionListener {
             JScrollBar vertical = scrollPane.getVerticalScrollBar();
             vertical.setValue(vertical.getMaximum());
         });
+        panelPrincipal.setLayout(new GridLayout(0, 5, 10, 10));
     }
 
     @Override

@@ -155,7 +155,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
         //datos Jugador Random
         String nombreRandom = random.getNombre();
-        String equipoJugadorRandom = random.getNombre();
+        String equipoJugadorRandom = random.getEquipo();
         String posicionRandom = random.getPosicion();
         String generoRandom = random.getGenero();
         String elementoRandom = random.getElemento();
@@ -482,9 +482,9 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
                 null,
 
-                "El jugador no existe o está mal escrito",
+                "Has ganado Felicidades",
                 "Nombre no encontrado",
-                JOptionPane.OK_OPTION
+                JOptionPane.YES_OPTION
         );
     }
 
