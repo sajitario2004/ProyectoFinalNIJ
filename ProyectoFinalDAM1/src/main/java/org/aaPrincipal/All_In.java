@@ -80,6 +80,33 @@ public class All_In {
         });
         this.bSalir = bSalir;
 
+        //Boton volver
+        // Configuración del botón de salida
+        JButton bVolver = new JButton("<");
+        int tVolverx = 100;
+        int tVolverY = 50;
+        bVolver.setBounds(0, 0, tVolverx, tVolverY);
+        bVolver.setBackground(Color.BLUE);
+        bVolver.setForeground(Color.WHITE);
+        bVolver.setBorderPainted(false);
+        bVolver.setFocusPainted(false);
+
+        //Añadir MouseListener para el boton es como a:hover en html y tambien le da un color si no esta el raton encima
+        bVolver.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                bVolver.setBackground(Color.CYAN);
+                bVolver.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                bVolver.setBackground(Color.CYAN);
+                bVolver.setForeground(Color.WHITE);
+            }
+        });
+        this.bVolverVPricipal = bVolver;
+
         //Configuracion botonJugar
         JButton bJuego = new JButton("Iniciar");
         int xbJuego =(int) (tPantallaX/100*45) ;
@@ -162,6 +189,7 @@ public class All_In {
             }
         });
         this.bHistorial = bHistorial;
+
 
         //Botones prinicpals
 

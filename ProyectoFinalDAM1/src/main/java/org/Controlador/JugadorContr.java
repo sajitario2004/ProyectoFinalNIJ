@@ -9,9 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class JugadorContr {
-    private final String nombre_fichero="Jugadores.txt";
 
-    public void ListaJugadores(){
+    public static void ListaJugadores(){
+        final String nombre_fichero="Jugadores.txt";
         BufferedWriter br = null;
         try {
             br = new BufferedWriter(new FileWriter(nombre_fichero));
@@ -35,11 +35,12 @@ public class JugadorContr {
     }
 
 
-    public List<Jugador> ListaJugadoresFichero(){
+    public static  List<Jugador> ListaJugadoresFichero(){
         List<Jugador> listajuga = new ArrayList<Jugador>();
         BufferedReader br = null;
         try {
             ListaJugadores();
+            String nombre_fichero="Jugadores.txt";
             br = new BufferedReader (new FileReader(nombre_fichero));
             String linea = br.readLine();
             while(linea!=null){
@@ -62,6 +63,7 @@ public class JugadorContr {
     public void borrarFichero(){
         BufferedWriter br = null;
         try {
+            final String nombre_fichero="Jugadores.txt";
             br =  new BufferedWriter(new FileWriter(nombre_fichero));
         } catch (IOException e) {
             throw new RuntimeException(e);

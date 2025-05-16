@@ -55,10 +55,10 @@ public class HistorialDAO implements IntDAO<Historial> {
 
 
     @Override
-    public Historial obtenerPorId(int idhisto , String nombrefichero) throws SQLException {
-        String sql = "SELECT * FROM historial WHERE id = " + idhisto;
+    public Historial obtenerPorId(int idhisto, String nombrefichero) throws SQLException {
+        String sql = "SELECT * FROM historial WHERE id = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            stmt.setInt(1, idhisto);
+            stmt.setInt(1, idhisto); // Establece el parámetro correctamente
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String nombre = rs.getString("nombre_usuario");
@@ -66,7 +66,7 @@ public class HistorialDAO implements IntDAO<Historial> {
                     int intentos = rs.getInt("intentos");
                     return new Historial(idhisto, nombre, tiempo, intentos);
                 } else {
-                    return null;
+                    return null; // No se encontró el historial
                 }
             }
         }

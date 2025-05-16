@@ -1,11 +1,13 @@
 package org.aaPrincipal;
 
+import org.Clases.Historial;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 import org.minijuego.minijuego;
 import org.pruebas.p4betaconscrol;
+import org.Controlador.JugadorContr;
 
 
 import javax.imageio.ImageIO;
@@ -15,6 +17,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.List;
 
+import static org.Controlador.JugadorContr.ListaJugadores;
 import static org.minijuego.minijuego.iniciar;
 
 public class VentanaPrincipal extends All_In implements ActionListener, NativeKeyListener {
@@ -23,8 +26,6 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
 
     int tamanoX = all.tPantallaX;
     int tamanoY = all.tPantallaY;
-
-
 
     //variable para imagen
     Image backgroundImage = null;
@@ -85,19 +86,30 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
             System.exit(0);
 
         } else if (e.getSource() == bJuego) {
-            new p4betaconscrol();
+            VentanaJuego.main(null);
+            ventanaPrincipal.setVisible(false);
+        } else if (e.getSource() == bMostrarJugadores) {
+            new VentanaJugadores();
+            ventanaPrincipal.setVisible(false);
+        } else if (e.getSource() == bHistorial) {
+            new VentanaHistorial();
             ventanaPrincipal.setVisible(false);
         }
     }
 
-    public static void main(String[] args) {
 
+    public static void calletano(String imagePath, String message) {
+        ImageIcon imageIcon = null;
         try {
-            GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeKeyListener(new VentanaPrincipal());
-        } catch (NativeHookException e) {
-            System.err.println("ha ocurrido un error con la aplicacion. Tipo de error:" + e.getMessage());
+            imageIcon = new ImageIcon(ImageIO.read(new File(imagePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la imagen:\n" + imagePath,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        // Mostrar la imagen junto con un mensaje
+        JOptionPane.showMessageDialog(null, message, "Título", JOptionPane.INFORMATION_MESSAGE, imageIcon);
     }
 
     String mEasterEgg = "";
@@ -124,4 +136,17 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
 
     }
+
+    public static void main(String[] args) {
+
+        try {
+            ListaJugadores();
+
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(new VentanaPrincipal());
+        } catch (NativeHookException e) {
+            System.err.println("ha ocurrido un error con la aplicacion. Tipo de error:" + e.getMessage());
+        }
+    }
+
 }
