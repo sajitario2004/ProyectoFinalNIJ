@@ -23,17 +23,9 @@ public class All_In {
     JButton bMostrarJugadores;
     JButton bHistorial;
 
+    JButton bVerJugadores;
     JButton bVolverVPricipal;
 
-    //Paneles de scrool
-    JScrollPane scrollJuego;
-    JPanel panelJuego;
-
-    JScrollPane scrollJugadores;
-    JPanel panelJugadores;
-
-    JScrollPane scrollHistorial;
-    JPanel panelHistorial;
 
     //Lista de botones principales
     public List<JButton> bVPrincipal = new ArrayList<>();
@@ -79,6 +71,37 @@ public class All_In {
             }
         });
         this.bSalir = bSalir;
+
+
+        // Configuración del botón de ver Jugadores
+        JButton bVerJugadores = new JButton();
+        bVerJugadores.setText("X"); // Asegúrate de que el botón tenga texto
+        int xVJugadores = tPantallaX - 100;
+        int yVJugadores = 0;
+        int wVJugadores = 100;
+        int hVJugadores = 50;
+        bVerJugadores.setBounds(xVJugadores, yVJugadores, wVJugadores, hVJugadores);
+        bVerJugadores.setBackground(Color.BLUE);
+        bVerJugadores.setForeground(Color.WHITE);
+        bVerJugadores.setBorderPainted(false);
+        bVerJugadores.setFocusPainted(false);
+
+        //Añadir MouseListener para el boton es como a:hover en html y tambien le da un color si no esta el raton encima
+        bVerJugadores.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                bVerJugadores.setBackground(Color.CYAN);
+                bVerJugadores.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                bVerJugadores.setBackground(Color.BLUE);
+                bVerJugadores.setForeground(Color.WHITE);
+            }
+        });
+        this.bVerJugadores = bVerJugadores;
+
 
         //Boton volver
         // Configuración del botón de salida

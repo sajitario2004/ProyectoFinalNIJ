@@ -89,7 +89,7 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
             VentanaJuego.main(null);
             ventanaPrincipal.setVisible(false);
         } else if (e.getSource() == bMostrarJugadores) {
-            new VentanaJugadores();
+            VentanaJugadores.main(null);
             ventanaPrincipal.setVisible(false);
         } else if (e.getSource() == bHistorial) {
             new VentanaHistorial();

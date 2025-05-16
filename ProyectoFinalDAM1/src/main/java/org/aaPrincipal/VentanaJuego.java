@@ -15,9 +15,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.Controlador.JugadorContr.ListaJugadores;
+import static org.Controlador.JugadorContr.ListaJugadoresFichero;
 import static org.minijuego.minijuego.iniciar;
 
 public class VentanaJuego extends JFrame implements ActionListener, NativeKeyListener {
@@ -32,9 +35,17 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
     JScrollPane scrollPane;
     JPanel panelPrincipal = new JPanel();
 
+    //jugador random
     Jugador random;
+    //lista con todos los jugadores
     List<Jugador> jugadores;
-    
+    //lista de nombres de los jugadores
+    List<String> nombJugadores;
+    //Lista de jugadores ya probados
+    List<String> nombUsados = new ArrayList<>();
+
+
+    // cajas de texto y botones
     JTextField inputText = new JTextField();
     JButton bSalir = all.bSalir;
     JButton bVolver = all.bVolverVPricipal;
@@ -73,15 +84,15 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
 
         // Configuración del panel de nombres
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+        panelPrincipal.setLayout(new GridLayout(0, 5, 10, 10));
+        panelPrincipal.setBackground(Color.DARK_GRAY);
         scrollPane = new JScrollPane(panelPrincipal);
-        scrollPane.setBounds(10, 50, tamanoX - 20, tamanoY - 100); // Ajusta el tamaño y la posición
+        scrollPane.setBounds(50, 70, tamanoX - 60, tamanoY - 150); // Ajusta el tamaño y la posición
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // Configuración del campo de texto y botón para agregar nombres
-        inputText.setBounds(100, tamanoY - 40, tamanoX - 220, 40);
-        bIntroducir.setBounds(tamanoX - 110, tamanoY - 40, 100, 30);
+        inputText.setBounds(80, tamanoY - 60, tamanoX - 220, 40);
+        bIntroducir.setBounds(tamanoX - 90, tamanoY - 60, 100, 30);
         bIntroducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +114,6 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         ventanaJuego.setVisible(true);
     }
     public static void cayetano(ImageIcon cayetanoEasterEgg, String message) {
-
         // Mostrar la imagen junto con un mensaje
         JOptionPane.showMessageDialog(null, message, "Título", JOptionPane.INFORMATION_MESSAGE, cayetanoEasterEgg);
     }
@@ -113,7 +123,6 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
 
         mEasterEgg += NativeKeyEvent.getKeyText(nativeKeyEvent.getKeyCode());
-
 
         if (mEasterEgg.equalsIgnoreCase("CAYETANO")) {
             //System.out.println(mEasterEgg);
@@ -135,23 +144,285 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
     }
 
-    private void addName() {
-        String name = inputText.getText().trim();
-        if (!name.isEmpty()) {
+    public void addName() {
+        jugadores = ListaJugadoresFichero();
 
-            JLabel nameLabel = new JLabel(name);
-            nameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-            nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-            panelPrincipal.add(nameLabel);
-            panelPrincipal.revalidate();
-            SwingUtilities.invokeLater(() -> {
-                JScrollBar vertical = scrollPane.getVerticalScrollBar();
-                vertical.setValue(vertical.getMaximum());
-            });
-            inputText.setText("");
-            inputText.requestFocus();
+        nombresJugadores();
+        if(random == null) {
+            generateRandom();
+            caracteristicasScroll();
         }
 
+        //datos Jugador Random
+        String nombreRandom = random.getNombre();
+        String equipoJugadorRandom = random.getNombre();
+        String posicionRandom = random.getPosicion();
+        String generoRandom = random.getGenero();
+        String elementoRandom = random.getElemento();
+
+
+        String nombreInput = "";
+        String equipoJugadorInput = "";
+        String posicionInput = "";
+        String generoInput = "";
+        String elementoInput = "";
+
+        String name = inputText.getText().trim();
+        //datos Jugador introducido
+        Iterator<Jugador> iterator = jugadores.iterator();
+        while (iterator.hasNext()) {
+            Jugador jugador = iterator.next();
+            if (jugador.getNombre().equals(name)) {
+                nombreInput = jugador.getNombre();
+                equipoJugadorInput = jugador.getEquipo();
+                posicionInput = jugador.getPosicion();
+                generoInput = jugador.getGenero();
+                elementoInput = jugador.getElemento();
+            }
+        }
+
+        if (!name.isEmpty()) {
+            if (nombJugadores.contains(name)) {
+                if (!nombUsados.contains(name)) {
+
+                    //Variables comparadoras y que van al lable
+                    JLabel nombreLabel = new JLabel(nombreInput);
+                    //ALINEAR ARRIBA VETICAL
+                    nombreLabel.setVerticalAlignment(SwingConstants.TOP);
+                    //ALINEAR CENTRO HORIZONTAL
+                    nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    //Fuentes y tamaño de la letra
+                    nombreLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+                    nombreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    if (nombreLabel.getText().equalsIgnoreCase(nombreRandom)) {
+                        nombreLabel.setForeground(Color.green);
+                    }else {
+                        nombreLabel.setForeground(Color.red);
+                    }
+                    panelPrincipal.add(nombreLabel);
+                    panelPrincipal.revalidate();
+                    SwingUtilities.invokeLater(() -> {
+                        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                        vertical.setValue(vertical.getMaximum());
+                    });
+                    nombUsados.add(nombreInput);
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    JLabel equipoLabel = new JLabel(equipoJugadorInput);
+                    //ALINEAR ARRIBA VETICAL
+                    equipoLabel.setVerticalAlignment(SwingConstants.TOP);
+                    //ALINEAR CENTRO HORIZONTAL
+                    equipoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    //Fuentes y tamaño de la letra
+                    equipoLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+                    equipoLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    if (equipoLabel.getText().equalsIgnoreCase(equipoJugadorRandom)) {
+                        equipoLabel.setForeground(Color.green);
+                    }else {
+                        equipoLabel.setForeground(Color.red);
+                    }
+                    panelPrincipal.add(equipoLabel);
+                    panelPrincipal.revalidate();
+                    SwingUtilities.invokeLater(() -> {
+                        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                        vertical.setValue(vertical.getMaximum());
+                    });
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    JLabel posicionLabel = new JLabel(posicionInput);
+                    //ALINEAR ARRIBA VETICAL
+                    posicionLabel.setVerticalAlignment(SwingConstants.TOP);
+                    //ALINEAR CENTRO HORIZONTAL
+                    posicionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    //Fuentes y tamaño de la letra
+                    posicionLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+                    posicionLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    if (posicionLabel.getText().equalsIgnoreCase(posicionRandom)) {
+                        posicionLabel.setForeground(Color.green);
+                    }else {
+                        posicionLabel.setForeground(Color.red);
+                    }
+                    panelPrincipal.add(posicionLabel);
+                    panelPrincipal.revalidate();
+                    SwingUtilities.invokeLater(() -> {
+                        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                        vertical.setValue(vertical.getMaximum());
+                    });
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    JLabel generoLabel = new JLabel(generoInput);
+                    //ALINEAR ARRIBA VETICAL
+                    generoLabel.setVerticalAlignment(SwingConstants.TOP);
+                    //ALINEAR CENTRO HORIZONTAL
+                    generoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    //Fuentes y tamaño de la letra
+                    generoLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+                    generoLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    if (generoLabel.getText().equalsIgnoreCase(generoRandom)) {
+                        generoLabel.setForeground(Color.green);
+                    }else {
+                        generoLabel.setForeground(Color.red);
+                    }
+                    panelPrincipal.add(generoLabel);
+                    panelPrincipal.revalidate();
+                    SwingUtilities.invokeLater(() -> {
+                        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                        vertical.setValue(vertical.getMaximum());
+                    });
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    JLabel elementoLabel = new JLabel(elementoInput);
+                    //ALINEAR ARRIBA VETICAL
+                    elementoLabel.setVerticalAlignment(SwingConstants.TOP);
+                    //ALINEAR CENTRO HORIZONTAL
+                    elementoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    //Fuentes y tamaño de la letra
+                    elementoLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+                    elementoLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    if (elementoLabel.getText().equalsIgnoreCase(elementoRandom)) {
+                        elementoLabel.setForeground(Color.green);
+                    }else {
+                        elementoLabel.setForeground(Color.red);
+                    }
+                    panelPrincipal.add(elementoLabel);
+                    panelPrincipal.revalidate();
+                    SwingUtilities.invokeLater(() -> {
+                        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+                        vertical.setValue(vertical.getMaximum());
+                    });
+
+
+
+                }else {
+                    popupYaAgregado();
+                }
+            }else{
+                popupNombreNoExiste();
+
+            }
+            inputText.setText("");
+            inputText.requestFocus();
+        }else {
+            popupCajaDeTextoVacia();
+        }
+
+        if (nombreRandom.equals(name)){
+            popupHasGanado();
+        }
+        nombJugadores = null;
+
+    }
+
+    public void caracteristicasScroll(){
+        JLabel nombre = new JLabel("Nombre");
+        nombre.setForeground(Color.WHITE);
+        //ALINEAR ARRIBA VETICAL
+        nombre.setVerticalAlignment(SwingConstants.TOP);
+        //ALINEAR CENTRO HORIZONTAL
+        nombre.setHorizontalAlignment(SwingConstants.CENTER);
+        //Fuentes y tamaño de la letra
+        nombre.setFont(new Font("SansSerif", Font.BOLD, 32));
+        nombre.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelPrincipal.add(nombre);
+        panelPrincipal.revalidate();
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar vertical = scrollPane.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        });
+
+        JLabel equipo = new JLabel("Equipo");
+        equipo.setForeground(Color.WHITE);
+        //ALINEAR ARRIBA VETICAL
+        equipo.setVerticalAlignment(SwingConstants.TOP);
+        //ALINEAR CENTRO HORIZONTAL
+        equipo.setHorizontalAlignment(SwingConstants.CENTER);
+        //Fuentes y tamaño de la letra
+        equipo.setFont(new Font("SansSerif", Font.BOLD, 32));
+        equipo.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelPrincipal.add(equipo);
+        panelPrincipal.revalidate();
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar vertical = scrollPane.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        });
+
+        JLabel posicion = new JLabel("Posicion");
+        posicion.setForeground(Color.WHITE);
+        //ALINEAR ARRIBA VETICAL
+        posicion.setVerticalAlignment(SwingConstants.TOP);
+        //ALINEAR CENTRO HORIZONTAL
+        posicion.setHorizontalAlignment(SwingConstants.CENTER);
+        //Fuentes y tamaño de la letra
+        posicion.setFont(new Font("SansSerif", Font.BOLD, 32));
+        posicion.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelPrincipal.add(posicion);
+        panelPrincipal.revalidate();
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar vertical = scrollPane.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        });
+
+        JLabel genero = new JLabel("genero");
+        genero.setForeground(Color.WHITE);
+        //ALINEAR ARRIBA VETICAL
+        genero.setVerticalAlignment(SwingConstants.TOP);
+        //ALINEAR CENTRO HORIZONTAL
+        genero.setHorizontalAlignment(SwingConstants.CENTER);
+        //Fuentes y tamaño de la letra
+        genero.setFont(new Font("SansSerif", Font.BOLD, 32));
+        genero.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelPrincipal.add(genero);
+        panelPrincipal.revalidate();
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar vertical = scrollPane.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        });
+
+        JLabel elemento = new JLabel("elemento");
+        elemento.setForeground(Color.WHITE);
+        //ALINEAR ARRIBA VETICAL
+        elemento.setVerticalAlignment(SwingConstants.TOP);
+        //ALINEAR CENTRO HORIZONTAL
+        elemento.setHorizontalAlignment(SwingConstants.CENTER);
+        //Fuentes y tamaño de la letra
+        elemento.setFont(new Font("SansSerif", Font.BOLD, 32));
+        elemento.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelPrincipal.add(elemento);
+        panelPrincipal.revalidate();
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar vertical = scrollPane.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        });
+    }
+
+    public void nombresJugadores() {
+        jugadores = ListaJugadoresFichero();
+        nombJugadores = new ArrayList<>();
+        Iterator<Jugador> iterator = jugadores.iterator();
+        while (iterator.hasNext()) {
+            Jugador jugador = iterator.next();
+            nombJugadores.add(jugador.getNombre());
+        }
     }
 
     public void actionPerformed(ActionEvent e){
@@ -163,15 +434,65 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         }
     }
 
-    public void generarRandom(){
+    public void generateRandom(){
         int numrandom = (int) (Math.random()*100);
-        random =
+        random = jugadores.get(numrandom);
+
+    }
+
+    public void popupNombreNoExiste(){
+        //esto me lo decia un panchito de un video de como hacer los popup
+        JOptionPane.showMessageDialog(
+
+                null,
+
+                "El jugador no existe o está mal escrito",
+                "Nombre no encontrado",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    public void popupCajaDeTextoVacia(){
+        //esto me lo decia un panchito de un video de como hacer los popup
+        JOptionPane.showMessageDialog(
+
+                null,
+
+                "La caja de texto esta vacia",
+                "Nombre no encontrado",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    public void popupYaAgregado(){
+        //esto me lo decia un panchito de un video de como hacer los popup
+        JOptionPane.showMessageDialog(
+
+                null,
+
+                "El jugador ya ha sido introducido",
+                "Nombre no encontrado",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    public void popupHasGanado(){
+        //esto me lo decia un panchito de un video de como hacer los popup
+        JOptionPane.showMessageDialog(
+
+                null,
+
+                "El jugador no existe o está mal escrito",
+                "Nombre no encontrado",
+                JOptionPane.OK_OPTION
+        );
     }
 
     public static void main(String[] args) {
         try {
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(new VentanaJuego());
+
         } catch (NativeHookException e) {
             System.err.println("ha ocurrido un error con la aplicacion. Tipo de error:" + e.getMessage());
         }
