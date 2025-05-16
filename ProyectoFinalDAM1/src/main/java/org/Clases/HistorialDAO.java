@@ -98,10 +98,6 @@ public class HistorialDAO implements IntDAO<Historial> {
         return lista;
     }
 
-    @Override
-    public void insertar(Historial o) throws SQLException {
-
-    }
 
     @Override
     public void actualizar(Historial o) throws SQLException {

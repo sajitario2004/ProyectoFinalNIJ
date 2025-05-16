@@ -1,13 +1,13 @@
-drop database proyectofinal;
-CREATE DATABASE proyectofinal;
-use proyectofinal;
+DROP DATABASE IF EXISTS Inazuma;
+CREATE DATABASE Inazuma;
+use Inazuma;
 
 create table Jugador(
 id_jugador int primary key , 
 nombre varchar(50),
 equipo varchar(50),
 posicion varchar(50),
-género varchar(50),
+genero varchar(50),
 elemento varchar(50)
 );
 

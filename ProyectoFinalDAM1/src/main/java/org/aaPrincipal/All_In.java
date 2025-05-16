@@ -23,6 +23,18 @@ public class All_In {
     JButton bMostrarJugadores;
     JButton bHistorial;
 
+    JButton bVolverVPricipal;
+
+    //Paneles de scrool
+    JScrollPane scrollJuego;
+    JPanel panelJuego;
+
+    JScrollPane scrollJugadores;
+    JPanel panelJugadores;
+
+    JScrollPane scrollHistorial;
+    JPanel panelHistorial;
+
     //Lista de botones principales
     public List<JButton> bVPrincipal = new ArrayList<>();
 

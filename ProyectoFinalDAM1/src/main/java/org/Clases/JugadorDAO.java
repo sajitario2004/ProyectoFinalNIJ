@@ -17,11 +17,6 @@ public class JugadorDAO implements IntDAO<Jugador> {
 
 
     @Override
-    public void insertar(Jugador o) throws SQLException {
-
-    }
-
-    @Override
     public void crear(String fichero) throws SQLException {
 
     }
@@ -38,7 +33,7 @@ public class JugadorDAO implements IntDAO<Jugador> {
 
     @Override
     public Jugador obtenerPorId(int id, String fichero) throws SQLException {
-        String sql = "SELECT * FROM jugador WHERE id = ?";
+        String sql = "SELECT * FROM Jugador WHERE id = ?";
         Jugador j = null;
         try(PreparedStatement ps  = connection.prepareStatement(sql)){
             ps.setInt(1, id);
@@ -46,7 +41,7 @@ public class JugadorDAO implements IntDAO<Jugador> {
                 if(rs.next()){
                     j = new Jugador(rs.getInt("id_jugador"),rs.getString("nombre"),
                             rs.getString("equipo"),rs.getString("posicion"),
-                            rs.getString("género"),rs.getString("elemento") );
+                            rs.getString("genero"),rs.getString("elemento") );
                 }
             }
         }
@@ -57,7 +52,7 @@ public class JugadorDAO implements IntDAO<Jugador> {
 
     @Override
     public List<Jugador> obtenerTodos() throws SQLException {
-        String sql = "SELECT * FROM Jugadores";
+        String sql = "SELECT * FROM Jugador";
         List<Jugador> jugadores = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
@@ -69,7 +64,7 @@ public class JugadorDAO implements IntDAO<Jugador> {
                         rs.getString("nombre"),
                         rs.getString("equipo"),
                         rs.getString("posicion"),
-                        rs.getString("género"),
+                        rs.getString("genero"),
                         rs.getString("elemento")
                 );
                 jugadores.add(jugador);
@@ -78,7 +73,9 @@ public class JugadorDAO implements IntDAO<Jugador> {
         return jugadores;
     }
     public void cerrarConexion() throws SQLException {
-        connection.close();
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
     }
 }
 
