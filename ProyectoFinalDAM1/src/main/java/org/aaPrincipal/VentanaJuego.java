@@ -65,6 +65,9 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         }
 
 
+        // Caja de texto usuario
+
+
         //Mostrar jugadores boton
         bMostrarJugadores.setBounds(50,tamanoY - 100, 300 ,50);
 
@@ -258,11 +261,37 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                     if (posicionLabel.getText().equalsIgnoreCase(posicionRandom)) {
                         posicionLabel.setForeground(Color.green);
                     }else {
-                        if(posicionLabel.getText().equalsIgnoreCase("PT/DF") || posicionLabel.getText().equalsIgnoreCase("PT") || posicionLabel.getText().equalsIgnoreCase("DF")) {
-                            if(posicionLabel.getText().length()>2 ){
 
+                        if (posicionLabel.getText().equalsIgnoreCase("PT") || posicionLabel.getText().equalsIgnoreCase("DF") || posicionLabel.getText().equalsIgnoreCase("DL") || posicionLabel.getText().equalsIgnoreCase("MD")) {
+                            if(posicionRandom.equalsIgnoreCase("PT/DF")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("PT/DL")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("PT/MD")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DF/PT")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DF/DL")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DF/MD")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DL/PT")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DL/DF")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("DL/MD")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("MD/PT")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("MD/DL")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else if (posicionRandom.equalsIgnoreCase("MD/DF")) {
+                                posicionLabel.setForeground(Color.ORANGE);
+                            } else {
+                                posicionLabel.setForeground(Color.RED);
                             }
-                        }if (posicionLabel.getText().equalsIgnoreCase("PT/DF"))
+                        }
+
 
                         posicionLabel.setForeground(Color.red);
                     }
