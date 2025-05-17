@@ -105,8 +105,8 @@ public class All_In {
 
         //Boton volver
         // Configuración del botón de salida
-        JButton bVolver = new JButton("<");
-        int tVolverx = 100;
+        JButton bVolver = new JButton("Menu Principal");
+        int tVolverx = 150;
         int tVolverY = 50;
         bVolver.setBounds(0, 0, tVolverx, tVolverY);
         bVolver.setBackground(Color.BLUE);

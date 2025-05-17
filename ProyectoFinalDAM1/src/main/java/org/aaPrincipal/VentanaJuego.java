@@ -11,17 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.Controlador.JugadorContr.ListaJugadores;
 import static org.Controlador.JugadorContr.ListaJugadoresFichero;
-import static org.minijuego.minijuego.iniciar;
 
 public class VentanaJuego extends JFrame implements ActionListener, NativeKeyListener {
     JFrame ventanaJuego = new JFrame();
@@ -46,10 +41,12 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
 
     // cajas de texto y botones
+    JTextField inputUsuario= new JTextField();
     JTextField inputText = new JTextField();
     JButton bSalir = all.bSalir;
     JButton bVolver = all.bVolverVPricipal;
     JButton bIntroducir = new JButton("Introducir");
+    JButton bMostrarJugadores = all.bMostrarJugadores;
 
 
     public VentanaJuego() {
@@ -68,6 +65,8 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         }
 
 
+        //Mostrar jugadores boton
+        bMostrarJugadores.setBounds(50,tamanoY - 100, 300 ,50);
 
         // Panel personalizado para dibujar la imagen adaptada al tamaño del JFrame
         JPanel contentPane = new JPanel() {
@@ -87,12 +86,14 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         panelPrincipal.setLayout(new GridLayout(0, 5, 10, 10));
         panelPrincipal.setBackground(Color.DARK_GRAY);
         scrollPane = new JScrollPane(panelPrincipal);
-        scrollPane.setBounds(50, 70, tamanoX - 60, tamanoY - 150); // Ajusta el tamaño y la posición
+        scrollPane.setBounds(25, 70, tamanoX - 60, tamanoY - 200);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Configuración del campo de texto y botón para agregar nombres
-        inputText.setBounds(80, tamanoY - 60, tamanoX - 220, 40);
-        bIntroducir.setBounds(tamanoX - 90, tamanoY - 60, 100, 30);
+        inputText.setBounds(400, tamanoY - 100, (tamanoX-800), 50);
+        inputText.setFont(new Font("Arial", Font.BOLD, 32));
+        bIntroducir.setBounds(tamanoX - 300, tamanoY - 100, 200, 50);
+        bIntroducir.setFont(new Font("Arial", Font.BOLD, 32));
         bIntroducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,8 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         bSalir.addActionListener(this);
         contentPane.add(bVolver);
         bVolver.addActionListener(this);
+        contentPane.add(bMostrarJugadores);
+        bMostrarJugadores.addActionListener(this);
 
         contentPane.add(scrollPane);
         contentPane.add(inputText);
@@ -115,7 +118,12 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
     }
     public static void cayetano(ImageIcon cayetanoEasterEgg, String message) {
         // Mostrar la imagen junto con un mensaje
-        JOptionPane.showMessageDialog(null, message, "Título", JOptionPane.INFORMATION_MESSAGE, cayetanoEasterEgg);
+        JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Título",
+                JOptionPane.INFORMATION_MESSAGE,
+                cayetanoEasterEgg);
     }
 
     String mEasterEgg = "";
@@ -126,9 +134,8 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
         if (mEasterEgg.equalsIgnoreCase("CAYETANO")) {
             //System.out.println(mEasterEgg);
-            String rutaCayetano = "/calletano.jpg";
-            ImageIcon FotoCayetano = new ImageIcon(getClass().getResource("/calletano.jpg"));
-            cayetano(FotoCayetano, "Soy calletano SAN");
+            ImageIcon FotoCayetano = new ImageIcon(getClass().getResource("/cayetano.jpg"));
+            cayetano(FotoCayetano, "Soy cayetano SAN");
             ventanaJuego.setVisible(false);
         }
 
@@ -431,6 +438,8 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         } else if (e.getSource() == bVolver) {
             new VentanaPrincipal();
             ventanaJuego.setVisible(false);
+        } else if (e.getSource() == bMostrarJugadores) {
+            new VentanaJugadores();
         }
     }
 

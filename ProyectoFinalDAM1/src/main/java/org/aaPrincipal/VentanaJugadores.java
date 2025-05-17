@@ -133,7 +133,7 @@ public class VentanaJugadores extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (bSalir == e.getSource()){
-            System.exit(0);
+            ventanaJugadores.setVisible(false);
         } else if (bVolverVP == e.getSource()) {
             new VentanaPrincipal();
             ventanaJugadores.setVisible(false);

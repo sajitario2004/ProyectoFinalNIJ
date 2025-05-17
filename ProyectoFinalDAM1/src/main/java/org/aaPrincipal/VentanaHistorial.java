@@ -44,7 +44,7 @@ public class VentanaHistorial extends JFrame implements ActionListener {
         ventanaHistorial.setLocationRelativeTo(null);
         ventanaHistorial.setBounds(0, 0, tamanoX, tamanoY);
 
-        // Cargar la imagen de fondo
+        //Cargar la imagen de fondo
         try {
             backgroundImage = ImageIO.read(getClass().getResource("/bg.jpg"));
         } catch (IOException e) {
@@ -62,7 +62,8 @@ public class VentanaHistorial extends JFrame implements ActionListener {
                 }
             }
         };
-        contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
+        // Desactivar el layout manager para usar posicionamiento absoluto
+        contentPane.setLayout(null);
         // Configuración del panel de nombres
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         scrollPane = new JScrollPane(panelPrincipal);
