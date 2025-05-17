@@ -103,7 +103,7 @@ public class minijuego extends JFrame implements ActionListener, NativeKeyListen
         });
         contentPane.add(bSalir);
 
-        bReiniciar.setText("REINICIAR O PUTO?");
+        bReiniciar.setText("REINICIAR O PUTITO?");
         bReiniciar.setBounds(tamanoX/2-UNIT_SIZE*7, tamanoY/2 -100, tSalidaX + 200, tSalidaY);
         bReiniciar.setBackground(Color.RED);
         bReiniciar.setForeground(Color.WHITE);
@@ -122,7 +122,7 @@ public class minijuego extends JFrame implements ActionListener, NativeKeyListen
             }
         });
         bReiniciar.setVisible(false);
-        contentPane.add(bReiniciar);
+
 
         //empezar el juego
         initGame();

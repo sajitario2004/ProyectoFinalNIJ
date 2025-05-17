@@ -88,6 +88,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         scrollPane = new JScrollPane(panelPrincipal);
         scrollPane.setBounds(25, 70, tamanoX - 60, tamanoY - 200);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Configuración del campo de texto y botón para agregar nombres
         inputText.setBounds(400, tamanoY - 100, (tamanoX-800), 50);
@@ -257,6 +258,12 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                     if (posicionLabel.getText().equalsIgnoreCase(posicionRandom)) {
                         posicionLabel.setForeground(Color.green);
                     }else {
+                        if(posicionLabel.getText().equalsIgnoreCase("PT/DF") || posicionLabel.getText().equalsIgnoreCase("PT") || posicionLabel.getText().equalsIgnoreCase("DF")) {
+                            if(posicionLabel.getText().length()>2 ){
+
+                            }
+                        }if (posicionLabel.getText().equalsIgnoreCase("PT/DF"))
+
                         posicionLabel.setForeground(Color.red);
                     }
                     panelPrincipal.add(posicionLabel);
@@ -389,7 +396,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
             vertical.setValue(vertical.getMaximum());
         });
 
-        JLabel genero = new JLabel("genero");
+        JLabel genero = new JLabel("Genero");
         genero.setForeground(Color.WHITE);
         //ALINEAR ARRIBA VETICAL
         genero.setVerticalAlignment(SwingConstants.TOP);
@@ -405,7 +412,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
             vertical.setValue(vertical.getMaximum());
         });
 
-        JLabel elemento = new JLabel("elemento");
+        JLabel elemento = new JLabel("Elemento");
         elemento.setForeground(Color.WHITE);
         //ALINEAR ARRIBA VETICAL
         elemento.setVerticalAlignment(SwingConstants.TOP);
