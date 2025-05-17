@@ -3,7 +3,6 @@ package org.Clases;
 public class Historial {
     private int id;
     private String nombre;
-    private int tiempo;
     private int intentos;
 
     public String getNombre() {
@@ -14,13 +13,6 @@ public class Historial {
         this.nombre = nombre;
     }
 
-    public int getTiempo() {
-        return tiempo;
-    }
-
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
-    }
 
     public int getIntentos() {
         return intentos;
@@ -37,10 +29,9 @@ public class Historial {
         this.id = id;
     }
 
-    public Historial(int id ,String nombre, int tiempo, int intentos) {
+    public Historial(int id ,String nombre,int intentos) {
         this.id = id;
         this.nombre = nombre;
-        this.tiempo = tiempo;
         this.intentos = intentos;
     }
 
@@ -50,6 +41,6 @@ public class Historial {
 
     @Override
     public String toString() {
-        return "Historial{"+"nombre='" + nombre +", tiempo=" + tiempo + ", intentos=" + intentos + '}';
+        return id+","+nombre+","+intentos;
     }
 }
