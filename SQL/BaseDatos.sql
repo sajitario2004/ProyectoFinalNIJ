@@ -27,7 +27,7 @@ Insert into Jugador values
 (7, "Timmy Saunders", "Raimon", "MD", "Masculino", "Bosque"),
 (8, "Sam Kincaid", "Raimon", "MD", "Masculino", "Neutro"),
 (9, "Axel Blaze", "Raimon", "DL", "Masculino", "Fuego"),
-(10, "Kevin Dragonfly", "Raimon", "DL", "Masculino", "Viento"),
+(10, "Kevin Dragonfly", "Raimon", "DL", "Masculino", "Aire"),
 (12, "William Glass", "Raimon", "DL", "Masculino", "Aire"),
 (13, "Bobby Shearer", "Raimon", "DF", "Masculino", "Bosque"),
 (14, "Jude Sharp", "Raimon", "MD", "Masculino", "Neutro"),
