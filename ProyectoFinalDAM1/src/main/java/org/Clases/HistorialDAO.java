@@ -32,8 +32,8 @@ public class HistorialDAO implements IntDAO<Historial> {
                     Historial h = new Historial();
 
 
-                    h.setNombre(datos[0]);
-                    h.setIntentos(Integer.parseInt(datos[1]));
+                    h.setNombre(datos[1]);
+                    h.setIntentos(Integer.parseInt(datos[2]));
 
 
                     stmt.setString(1, h.getNombre());
