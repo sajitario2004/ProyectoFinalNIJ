@@ -44,7 +44,7 @@ public class HistorialContr {
                     int tiempo = Integer.parseInt(datos[2]);
                     int intentos = Integer.parseInt(datos[3]);
 
-                    Historial a = new Historial(id, nombre, tiempo, intentos);
+                    Historial a = new Historial(id, nombre,  intentos);
                     listahisto.add(a);
                 }
                 linea = br.readLine();
