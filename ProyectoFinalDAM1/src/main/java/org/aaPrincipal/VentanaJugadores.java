@@ -43,6 +43,8 @@ public class VentanaJugadores extends JFrame implements ActionListener {
 
     List<Jugador> jugadores;
 
+
+
     public VentanaJugadores() {
         ventanaJugadores.setTitle("Ventana Jugadores");
         ventanaJugadores.setResizable(true);
@@ -67,7 +69,7 @@ public class VentanaJugadores extends JFrame implements ActionListener {
                 }
             }
         };
-        contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
+        contentPane.setLayout(null);
         // Configuración del panel de nombres
         //panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         scrollPane = new JScrollPane(panelPrincipal);
@@ -140,11 +142,6 @@ public class VentanaJugadores extends JFrame implements ActionListener {
         }
     }
 
-    public static List<String> getNombres(){
-        List<String> nombres = new ArrayList<>();
-        return null;
-
-    }
 
     public static void main(String[] args) {
         new VentanaJugadores();

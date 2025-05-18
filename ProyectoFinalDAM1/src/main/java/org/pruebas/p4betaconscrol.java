@@ -18,7 +18,6 @@ public class p4betaconscrol extends All_In implements ActionListener {
     int tamanoY = all.tPantallaY;
 
     // Lista para almacenar los nombres
-    List<JButton> buttons = all.bVPrincipal;
 
     // Variable para imagen
     Image backgroundImage = null;

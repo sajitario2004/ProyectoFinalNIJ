@@ -1,6 +1,7 @@
 package org.aaPrincipal;
 
 import org.Clases.Historial;
+import org.Controlador.HistorialContr;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.Controlador.JugadorContr.ListaJugadores;
@@ -32,7 +34,6 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
 
     //buton
     JButton bSalir = all.bSalir;
-    JTextField tUsuario = all.tUsuario;
     JButton bJuego = all.bJuego;
     JButton bMostrarJugadores = all.bMostrarJugadores;
     JButton bHistorial = all.bHistorial;
@@ -59,11 +60,11 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (backgroundImage != null) {
-                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(backgroundImage, 0, 0, tamanoX, tamanoY, this);
                 }
             }
         };
-        contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
+        contentPane.setLayout(null);
         ventanaPrincipal.setContentPane(contentPane);
 
         // Añadir botones
@@ -83,8 +84,9 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bSalir) {
+            HistorialContr.borrarFichero();
+            JugadorContr.borrarFichero();
             System.exit(0);
-
         } else if (e.getSource() == bJuego) {
             VentanaJuego.main(null);
             ventanaPrincipal.setVisible(false);
@@ -92,7 +94,11 @@ public class VentanaPrincipal extends All_In implements ActionListener, NativeKe
             VentanaJugadores.main(null);
             ventanaPrincipal.setVisible(false);
         } else if (e.getSource() == bHistorial) {
-            new VentanaHistorial();
+            try {
+                new VentanaHistorial();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             ventanaPrincipal.setVisible(false);
         }
     }

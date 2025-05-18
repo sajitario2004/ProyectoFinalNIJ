@@ -28,7 +28,6 @@ public class All_In {
 
 
     //Lista de botones principales
-    public List<JButton> bVPrincipal = new ArrayList<>();
 
 
 

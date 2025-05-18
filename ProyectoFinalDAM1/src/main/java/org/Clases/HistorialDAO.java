@@ -21,26 +21,23 @@ public class HistorialDAO implements IntDAO<Historial> {
 
     @Override
     public void crear(String nombrefichero) throws SQLException {
-        String sql = "INSERT INTO historial (id, nombre, tiempo, intentos) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO historial (nombre, intentos) VALUES ( ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql);
              BufferedReader br = new BufferedReader(new FileReader(nombrefichero))) {
-
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(",");
-                if (datos.length == 4) {
+                if (datos.length == 3) {
 
                     Historial h = new Historial();
 
-                    h.setId(Integer.parseInt(datos[0]));
-                    h.setNombre(datos[1]);
-                    h.setTiempo(Integer.parseInt(datos[2]));
-                    h.setIntentos(Integer.parseInt(datos[3]));
 
-                    stmt.setInt(1, h.getId());
-                    stmt.setString(2, h.getNombre());
-                    stmt.setDouble(3, h.getTiempo());
-                    stmt.setInt(4, h.getIntentos());
+                    h.setNombre(datos[0]);
+                    h.setIntentos(Integer.parseInt(datos[1]));
+
+
+                    stmt.setString(1, h.getNombre());
+                    stmt.setInt(2, h.getIntentos());
 
                     stmt.executeUpdate();
                 }
@@ -64,7 +61,7 @@ public class HistorialDAO implements IntDAO<Historial> {
                     String nombre = rs.getString("nombre_usuario");
                     int tiempo = rs.getInt("tiempo");
                     int intentos = rs.getInt("intentos");
-                    return new Historial(idhisto, nombre, tiempo, intentos);
+                    return new Historial(idhisto, nombre,  intentos);
                 } else {
                     return null; // No se encontró el historial
                 }
@@ -88,10 +85,9 @@ public class HistorialDAO implements IntDAO<Historial> {
             while (rs.next()) {
                 int id = rs.getInt("id_historial");
                 String nombre = rs.getString("nombre_usuario");
-                int tiempo = rs.getInt("tiempo");
                 int intentos = rs.getInt("intentos");
 
-                Historial h = new Historial(id, nombre, tiempo, intentos);
+                Historial h = new Historial(id, nombre, intentos);
                 lista.add(h);
             }
         }

@@ -1,6 +1,10 @@
 package org.aaPrincipal;
 
+import org.Clases.Historial;
+import org.Clases.HistorialDAO;
 import org.Clases.Jugador;
+import org.Controlador.HistorialContr;
+import org.Controlador.JugadorContr;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -12,10 +16,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.Controlador.HistorialContr.EscribirHistorial;
 import static org.Controlador.JugadorContr.ListaJugadoresFichero;
 
 public class VentanaJuego extends JFrame implements ActionListener, NativeKeyListener {
@@ -41,13 +47,15 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
 
     // cajas de texto y botones
-    JTextField inputUsuario= new JTextField();
     JTextField inputText = new JTextField();
     JButton bSalir = all.bSalir;
     JButton bVolver = all.bVolverVPricipal;
     JButton bIntroducir = new JButton("Introducir");
     JButton bMostrarJugadores = all.bMostrarJugadores;
 
+    // cosas Jugadores
+    JTextField inputUsuario= new JTextField("Nombre Usuario");
+    int contIntentos =0;
 
     public VentanaJuego() {
         ventanaJuego.setTitle("Ventana Juego");
@@ -55,6 +63,11 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         ventanaJuego.setLocationRelativeTo(null);
         ventanaJuego.setBounds(0, 0, tamanoX, tamanoY);
 
+
+        //Caja de texto con el usuario del jugador
+        inputUsuario.setBounds(tamanoX/2 - 200, 0, 400, 50);
+        inputUsuario.setFont(new Font("SansSerif", Font.BOLD, 28));
+        //inputUsuario.;
 
         // Cargar la imagen de fondo
         try {
@@ -81,7 +94,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                 }
             }
         };
-        contentPane.setLayout(null); // Desactivar el layout manager para usar posicionamiento absoluto
+        contentPane.setLayout(null);
         ventanaJuego.setContentPane(contentPane);
 
 
@@ -91,7 +104,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         scrollPane = new JScrollPane(panelPrincipal);
         scrollPane.setBounds(25, 70, tamanoX - 60, tamanoY - 200);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 
         // Configuración del campo de texto y botón para agregar nombres
         inputText.setBounds(400, tamanoY - 100, (tamanoX-800), 50);
@@ -116,6 +129,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         contentPane.add(scrollPane);
         contentPane.add(inputText);
         contentPane.add(bIntroducir);
+        contentPane.add(inputUsuario);
 
         // Hacer visible la ventana
         ventanaJuego.setVisible(true);
@@ -139,7 +153,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         if (mEasterEgg.equalsIgnoreCase("CAYETANO")) {
             //System.out.println(mEasterEgg);
             ImageIcon FotoCayetano = new ImageIcon(getClass().getResource("/cayetano.jpg"));
-            cayetano(FotoCayetano, "Soy cayetano SAN");
+            cayetano(FotoCayetano, "Has desbloqueado el jugador secreto CAYETANO-SAN");
             ventanaJuego.setVisible(false);
         }
 
@@ -157,6 +171,9 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
     public void addName() {
         jugadores = ListaJugadoresFichero();
+
+        String nombreUsu = inputUsuario.getText();
+        contIntentos++;
 
         nombresJugadores();
         if(random == null) {
@@ -218,6 +235,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                     });
                     nombUsados.add(nombreInput);
 
+                    //tiempecito de espera por que le cuesta cargar en el ordenador de clase. Aunque me gusta mas la variable timer
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -262,38 +280,9 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                         posicionLabel.setForeground(Color.green);
                     }else {
 
-                        if (posicionLabel.getText().equalsIgnoreCase("PT") || posicionLabel.getText().equalsIgnoreCase("DF") || posicionLabel.getText().equalsIgnoreCase("DL") || posicionLabel.getText().equalsIgnoreCase("MD")) {
-                            if(posicionRandom.equalsIgnoreCase("PT/DF")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("PT/DL")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("PT/MD")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DF/PT")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DF/DL")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DF/MD")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DL/PT")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DL/DF")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("DL/MD")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("MD/PT")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("MD/DL")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else if (posicionRandom.equalsIgnoreCase("MD/DF")) {
-                                posicionLabel.setForeground(Color.ORANGE);
-                            } else {
-                                posicionLabel.setForeground(Color.RED);
-                            }
-                        }
+                        // colorear en naranja el texto en el caso de que contenga uno de los datos
+                        posicionLabel.setForeground(Color.RED);
 
-
-                        posicionLabel.setForeground(Color.red);
                     }
                     panelPrincipal.add(posicionLabel);
                     panelPrincipal.revalidate();
@@ -371,6 +360,16 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
         if (nombreRandom.equals(name)){
             popupHasGanado();
+            Historial historial = new Historial();
+            //compurebo si el usuario no ha introducido su usuario y le doy uno random
+            if (!nombreUsu.isEmpty()) {
+                historial.setNombre(nombreUsu);
+            }else {
+                historial.setNombre("TiempoMin");
+            }
+            historial.setIntentos(contIntentos);
+            EscribirHistorial(historial);
+
         }
         nombJugadores = null;
 
@@ -470,6 +469,8 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == bSalir){
+            HistorialContr.borrarFichero();
+            JugadorContr.borrarFichero();
             System.exit(0);
         } else if (e.getSource() == bVolver) {
             new VentanaPrincipal();

@@ -1,6 +1,9 @@
 package org.aaPrincipal;
 
+import org.Clases.Historial;
 import org.Clases.Jugador;
+import org.Controlador.HistorialContr;
+import org.Controlador.JugadorContr;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,10 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.Controlador.HistorialContr.ListaHistorialFichero;
 import static org.Controlador.JugadorContr.ListaJugadoresFichero;
 
 
@@ -36,9 +41,9 @@ public class VentanaHistorial extends JFrame implements ActionListener {
     JButton bSalir = all.bSalir;
     JButton bVolverVP = all.bVolverVPricipal;
 
-    List<Jugador> jugadores;
+    List<Historial> historial;
 
-    public VentanaHistorial(){
+    public VentanaHistorial() throws SQLException {
         ventanaHistorial.setTitle("Ventana Jugadores");
         ventanaHistorial.setResizable(true);
         ventanaHistorial.setLocationRelativeTo(null);
@@ -81,12 +86,12 @@ public class VentanaHistorial extends JFrame implements ActionListener {
         contentPane.add(bVolverVP);
         contentPane.add(scrollPane);
 
-        jugadores = ListaJugadoresFichero();
-        System.out.println(jugadores.get(0));
-        Iterator it = jugadores.iterator();
+        historial = ListaHistorialFichero();
+
+        Iterator it = historial.iterator();
         while (it.hasNext()){
-            Jugador jugIT = (Jugador) it.next();
-            nomJugadores = jugIT.getNombre() +"\n";
+            Historial itHisto = (Historial) it.next();
+            nomJugadores = itHisto.getNombre() +"\n";
             addName();
         }
 
@@ -126,6 +131,8 @@ public class VentanaHistorial extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (bSalir == e.getSource()){
             System.exit(0);
+            HistorialContr.borrarFichero();
+            JugadorContr.borrarFichero();
         } else if (bVolverVP == e.getSource()) {
             new VentanaPrincipal();
             ventanaHistorial.setVisible(false);
@@ -138,8 +145,8 @@ public class VentanaHistorial extends JFrame implements ActionListener {
 
     }
 
-    public static void main(String[] args) {
-        new VentanaJugadores();
+    public static void main(String[] args) throws SQLException {
+        new VentanaHistorial();
     }
 
 }

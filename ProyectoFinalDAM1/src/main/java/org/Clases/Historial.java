@@ -35,7 +35,6 @@ public class Historial {
         this.intentos = intentos;
     }
 
-
     public Historial() {
     }
 
@@ -44,3 +43,5 @@ public class Historial {
         return id+","+nombre+","+intentos;
     }
 }
+
+

@@ -5,19 +5,22 @@ import org.Clases.HistorialDAO;
 import org.Clases.Jugador;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class HistorialContr {
-
+     private static final String nombre_fichero="Historial.txt";
+    private static final String nombre_fichero2="Registro_Historial.txt";
     public static void EscribirHistorial(Historial historial) {
-        final String nombre_fichero="historial.txt";
+
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(nombre_fichero));
                 bw.write(historial.toString());
                 bw.newLine();
+                new HistorialDAO().crear(nombre_fichero);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -29,49 +32,65 @@ public class HistorialContr {
 
         }
     }
-    public static List<Historial> ListaHistorialFichero() {
-        List<Historial> listahisto = new ArrayList<Historial>();
+    public static List<Historial> ListaHistorialFichero() throws SQLException {
+        List<Historial> listahis = new ArrayList<Historial>();
         BufferedReader br = null;
         try {
-            String nombre_fichero = "historial.txt";
-            br = new BufferedReader(new FileReader(nombre_fichero));
+            ListaHistorial();
+            br = new BufferedReader (new FileReader(nombre_fichero2));
             String linea = br.readLine();
-            while (linea != null) {
+            while(linea!=null){
                 String[] datos = linea.split(",");
-                if (datos.length == 4) {
-                    int id = Integer.parseInt(datos[0]);
-                    String nombre = datos[1];
-                    int tiempo = Integer.parseInt(datos[2]);
-                    int intentos = Integer.parseInt(datos[3]);
-
-                    Historial a = new Historial(id, nombre,  intentos);
-                    listahisto.add(a);
-                }
+                Historial a = new Historial(Integer.parseInt(datos[0]),datos[1],Integer.parseInt(datos[2]));
+                listahis.add(a);
                 linea = br.readLine();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        return listahisto;
-    }
 
-    public void borrarFichero(){
-        BufferedWriter br = null;
-        try {
-            final String nombre_fichero="historial.txt";
-            br =  new BufferedWriter(new FileWriter(nombre_fichero));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }finally {
             try {
                 br.close();
+            } catch (IOException e) {}
+        }
+        return listahis;
+    }
+
+    public static void ListaHistorial() throws SQLException {
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(nombre_fichero2));
+            List<Historial> lista = new HistorialDAO().obtenerTodos();
+            Iterator<Historial>i = lista.iterator();
+            while (i.hasNext()) {
+                Historial h = i.next();
+                bw.write(h.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    public static void borrarFichero(){
+        BufferedWriter br = null;
+        BufferedWriter br2 = null;
+        try {
+            br =  new BufferedWriter(new FileWriter(nombre_fichero));
+            br2 =  new BufferedWriter(new FileWriter(nombre_fichero2));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                br.close();
+                br2.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
