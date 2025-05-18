@@ -80,6 +80,9 @@ public class HistorialContr {
 
 
     public static void borrarFichero(){
+
+
+
         BufferedWriter br = null;
         BufferedWriter br2 = null;
         try {
@@ -95,6 +98,7 @@ public class HistorialContr {
                 throw new RuntimeException(e);
             }
         }
+
     }
 
 }

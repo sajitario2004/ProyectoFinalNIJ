@@ -212,7 +212,6 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                 elementoInput = jugador.getElemento();
             }
         }
-
         if (!name.isEmpty()) {
             if (nombJugadores.contains(name)) {
                 if (!nombUsados.contains(name)) {

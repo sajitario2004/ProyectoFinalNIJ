@@ -21,7 +21,7 @@ public class HistorialDAO implements IntDAO<Historial> {
 
     @Override
     public void crear(String nombrefichero) throws SQLException {
-        String sql = "INSERT INTO Historial (id_historial,nombre, intentos) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Historial (id_historial,nombre_usuario, intentos) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql);
              BufferedReader br = new BufferedReader(new FileReader(nombrefichero))) {
             String linea;
@@ -45,6 +45,8 @@ public class HistorialDAO implements IntDAO<Historial> {
             throw new RuntimeException("Archivo no encontrado: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new RuntimeException("Error de entrada/salida: " + e.getMessage(), e);
+        } finally {
+            cerrarConexion();
         }
     }
 
@@ -52,13 +54,12 @@ public class HistorialDAO implements IntDAO<Historial> {
 
     @Override
     public Historial obtenerPorId(int idhisto, String nombrefichero) throws SQLException {
-        String sql = "SELECT * FROM historial WHERE id = ?";
+        String sql = "SELECT * FROM Historial WHERE id = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setInt(1, idhisto); // Establece el parámetro correctamente
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String nombre = rs.getString("nombre_usuario");
-                    int tiempo = rs.getInt("tiempo");
                     int intentos = rs.getInt("intentos");
                     return new Historial(idhisto, nombre,  intentos);
                 } else {
@@ -76,7 +77,7 @@ public class HistorialDAO implements IntDAO<Historial> {
     @Override
     public List<Historial> obtenerTodos() throws SQLException {
         List<Historial> lista = new ArrayList<>();
-        String sql = "SELECT * FROM historial";
+        String sql = "SELECT * FROM Historial";
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
