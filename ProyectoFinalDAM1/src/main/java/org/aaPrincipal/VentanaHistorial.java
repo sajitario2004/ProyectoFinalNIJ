@@ -1,6 +1,7 @@
 package org.aaPrincipal;
 
 import org.Clases.Historial;
+import org.Clases.HistorialDAO;
 import org.Clases.Jugador;
 import org.Controlador.HistorialContr;
 import org.Controlador.JugadorContr;
@@ -91,7 +92,7 @@ public class VentanaHistorial extends JFrame implements ActionListener {
         Iterator it = historial.iterator();
         while (it.hasNext()){
             Historial itHisto = (Historial) it.next();
-            nomJugadores = itHisto.getNombre() +"\n";
+            nomJugadores = itHisto.getNombre() + ", " + itHisto.getIntentos() +"\n";
             addName();
         }
 
