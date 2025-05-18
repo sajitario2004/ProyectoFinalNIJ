@@ -373,7 +373,12 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
             }
             historial.setIntentos(contIntentos);
             List<Historial>lista = new ArrayList<>( new HistorialDAO().obtenerTodos());
-            int a = lista.size()+1;
+            int a =0;
+            if (lista.isEmpty()){
+                a++;
+            }else{
+              a= lista.size()+1;
+            }
             historial.setId(a);
             EscribirHistorial(historial);
 

@@ -21,7 +21,7 @@ public class HistorialDAO implements IntDAO<Historial> {
 
     @Override
     public void crear(String nombrefichero) throws SQLException {
-        String sql = "INSERT INTO historial (id_historial,nombre, intentos) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Historial (id_historial,nombre, intentos) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql);
              BufferedReader br = new BufferedReader(new FileReader(nombrefichero))) {
             String linea;
@@ -34,9 +34,9 @@ public class HistorialDAO implements IntDAO<Historial> {
                     h.setNombre(datos[1]);
                     h.setIntentos(Integer.parseInt(datos[2]));
 
-
-                    stmt.setString(1, h.getNombre());
-                    stmt.setInt(2, h.getIntentos());
+                    stmt.setInt(1, h.getId());
+                    stmt.setString(2, h.getNombre());
+                    stmt.setInt(3, h.getIntentos());
 
                     stmt.executeUpdate();
                 }
