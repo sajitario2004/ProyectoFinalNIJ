@@ -13,14 +13,12 @@ elemento varchar(50)
 
 create table Historial(
 id_historial int auto_increment primary key , 
-nombre_usuario varchar(50) , 
-tiempo int , 
+nombre_usuario varchar(50) ,  
 intentos int 
 );
 
-
 Insert into Jugador values
-(1,"Mark Evans", "Raimon", "PT/DF", "Masculino", "Tierra"),
+(1,"Mark Evans", "Raimon", "PT", "Masculino", "Tierra"),
 (2,"Nathan Swift", "Raimon", "DF", "Masculino", "Aire"),
 (3, "Jack Wallside", "Raimon", "DF", "Masculino", "Tierra"),
 (4, "Jim Wraith", "Raimon", "DF", "Masculino", "Bosque"),
@@ -36,12 +34,12 @@ Insert into Jugador values
 (15, "Erik Eagle", "Raimon", "MD", "Masculino", "Aire"),
 (16, "Shawn Frost", "Raimon", "DL", "Masculino", "Aire"),
 (17, "Austin Hobbes", "Raimon", "DL", "Masculino", "Fuego"),
-(18, "Darren LaChance", "Raimon", "PT/MD", "Masculino", "Fuego"),
+(18, "Darren LaChance", "Raimon", "PT", "Masculino", "Fuego"),
 (19, "Hurley Kane", "Raimon", "DF", "Masculino", "Aire"),
 (20, "Scotty Banyan", "Raimon", "DF", "Masculino", "Bosque"),
 (21, "Suzette Hartland", "Raimon", "DL", "Femenino", "Bosque"),
 (22, "Tory Farrell", "Raimon", "DF", "Masculino", "Tierra"),
-(23, "Shawn Frost", "Raimon", "DF/DL", "Masculino", "Aire"),
+(23, "Shawn Frost", "Raimon", "DL", "Masculino", "Aire"),
 (24, "Byron Love", "Zeus", "DL", "Masculino", "Aire"),
 (25, "Joseph King", "Royal Academy", "PT", "Masculino", "Fuego"),
 (26, "Peter Drent", "Royal Academy", "DF", "Masculino", "Tierra"),
@@ -92,7 +90,7 @@ Insert into Jugador values
 (71, "Light Nobel", "Otaku", "MD", "Masculino", "Bosque"),
 (72, "Walter Valiant", "Otaku", "MD", "Masculino", "Fuego"),
 (73, "Spencer Gates", "Otaku", "DF", "Masculino", "Neutro"),
-(74, "Isabelle Trick", "Génesis", "MD/DL", "Femenino", "Aire"),
+(74, "Isabelle Trick", "Génesis", "MD", "Femenino", "Aire"),
 (75, "Gaby Farmer", "Otaku", "DL", "Masculino", "Tierra"),
 (76, "Victoria Vanguard", "Raimon", "MD", "Femenino", "Aire"),
 (77, "Gus Gamer", "Otaku", "DL", "Masculino", "Aire"),
@@ -104,7 +102,7 @@ Insert into Jugador values
 (83, "Wesley Knox", "Zeus", "MD", "Masculino", "Bosque"),
 (84, "Harry Closs", "Zeus", "DF", "Masculino", "Fuego"),
 (85, "Jonas Demetrius", "Zeus", "DL", "Masculino", "Fuego"),
-(86, "Henry House", "Zeus", "MD/DF", "Masculino", "Fuego"),
+(86, "Henry House", "Zeus", "MD", "Masculino", "Fuego"),
 (87, "Lane War", "Zeus", "DF", "Masculino", "Montaña"),
 (88, "Ned Yousef", "Zeus", "MD", "Masculino", "Montaña"),
 (89, "Jeff Iron", "Zeus", "DF", "Masculino", "Fuego"),
