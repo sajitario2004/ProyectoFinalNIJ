@@ -35,7 +35,7 @@ public class JugadorContr {
     }
 
 
-    public static  List<Jugador> ListaJugadoresFichero(){
+    public static   List<Jugador> ListaJugadoresFichero(){
         List<Jugador> listajuga = new ArrayList<Jugador>();
         BufferedReader br = null;
         try {

@@ -18,7 +18,7 @@ public class main {
                 null,
 
                 "Importante en la base de datos tiene " +
-                        "que existir el usuario: prueba y" +
+                        "que existir el usuario: prueba y " +
                         "la contraseña tiene que ser 1234.\n Tambien se " +
                         "tiene que haber ejecutado el archivo sql" +
                         "agregado junto al proyecto /SQL/BaseDatos.sql .",

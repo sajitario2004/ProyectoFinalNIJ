@@ -114,7 +114,11 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
         bIntroducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addName();
+                try {
+                    addName();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -169,7 +173,7 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
 
     }
 
-    public void addName() {
+    public void addName() throws SQLException {
         jugadores = ListaJugadoresFichero();
 
         String nombreUsu = inputUsuario.getText();
@@ -368,6 +372,9 @@ public class VentanaJuego extends JFrame implements ActionListener, NativeKeyLis
                 historial.setNombre("TiempoMin");
             }
             historial.setIntentos(contIntentos);
+            List<Historial>lista = new ArrayList<>( new HistorialDAO().obtenerTodos());
+            int a = lista.size()+1;
+            historial.setId(a);
             EscribirHistorial(historial);
 
         }

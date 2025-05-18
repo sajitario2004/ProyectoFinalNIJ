@@ -12,7 +12,7 @@ elemento varchar(50)
 );
 
 create table Historial(
-id_historial int auto_increment primary key , 
+id_historial int  primary key , 
 nombre_usuario varchar(50) ,  
 intentos int 
 );
